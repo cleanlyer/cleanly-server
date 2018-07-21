@@ -1,0 +1,10 @@
+{
+  "name": "cleanly-server",
+  "version": "0.0.1",
+  "description": "server side for cleanly app",
+  "main": "index.js",
+  "repository": "git@github.com:cleanlyer/cleanly-server.git",
+  "author": "kanekotic <alvarojosepl@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
