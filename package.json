@@ -6,5 +6,13 @@
   "repository": "git@github.com:cleanlyer/cleanly-server.git",
   "author": "kanekotic <alvarojosepl@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "body-parser": "1.18.3",
+    "cors": "2.8.4",
+    "express": "4.16.3",
+    "express-exception-handler": "0.1.5",
+    "helmet": "3.12.2",
+    "morgan": "1.9.0"
+  }
 }
