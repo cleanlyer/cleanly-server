@@ -21,6 +21,13 @@ router.put('/garbage/:id', async (req, res) => {
     res.send(req.body)
 })
 
+router.delete('/garbage/:id', async (req, res) => {
+    if(!req.body.id)
+        throw new AppError('Wrong Parameter', 400)
+    table.filter(element => element.id = req.params.id)
+    res.send({})
+})
+
 router.put('/garbage/:id/image', upload.single('garbage'), async (req, res) => {
     console.log(req)
     let garbage = table.find(element => element.id = req.params.id)
