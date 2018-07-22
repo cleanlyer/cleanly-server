@@ -27,7 +27,7 @@ router.put('/garbage/:id/image', upload.single('garbage'), async (req, res) => {
     fs.rename(req.file.path, `${req.file.path}.png`, function(err) {
         if ( err ) console.log(err)
     });
-    garbage.url = `https://rocky-dusk-51136.herokuapp.com/${req.file.filename}.png`
+    garbage.url = `https://rocky-dusk-51136.herokuapp.com/uploads/${req.file.filename}.png`
     res.send(garbage)
 })
 
