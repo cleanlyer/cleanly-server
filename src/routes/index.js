@@ -16,7 +16,7 @@ router.post('/garbage', async (req, res) => {
 router.put('/garbage/:id', async (req, res) => {
     if(!req.body.id)
         throw new AppError('Wrong Parameter', 400)
-    table = table.filter(element => element.id = req.params.id)
+    table = table.filter(element => element.id == req.params.id)
     table.push(req.body)
     res.send(req.body)
 })
@@ -24,7 +24,7 @@ router.put('/garbage/:id', async (req, res) => {
 router.delete('/garbage/:id', async (req, res) => {
     if(!req.body.id)
         throw new AppError('Wrong Parameter', 400)
-    table = table.filter(element => element.id = req.params.id)
+    table = table.filter(element => element.id == req.params.id)
     res.send({})
 })
 
