@@ -1,19 +1,38 @@
 const router = require('express').Router()
-var AppError = require('express-exception-handler').exception
+let AppError = require('express-exception-handler').exception
+let multer  = require('multer')
+let upload = multer({ dest: 'public/uploads/'})
+let fs = require('fs')
 
-let something = []
+let table = []
 
 router.post('/garbage', async (req, res) => {
-    something.push(req.body)
+    if(!req.body.id)
+        throw new AppError('Wrong Parameter', 400)
+    table.push(req.body)
     res.send(req.body)
 })
 
 router.put('/garbage/:id', async (req, res) => {
+    if(!req.body.id)
+        throw new AppError('Wrong Parameter', 400)
+    table.filter(element => element.id = req.params.id)
+    table.push(req.body)
     res.send(req.body)
 })
 
-router.get('/garbage', async (req, res) => {
-    res.send(something)
+router.put('/garbage/:id/image', upload.single('garbage'), async (req, res) => {
+    console.log(req)
+    let garbage = table.find(element => element.id = req.params.id)
+    fs.rename(req.file.path, `${req.file.path}.png`, function(err) {
+        if ( err ) console.log(err)
+    });
+    garbage.url = `https://rocky-dusk-51136.herokuapp.com/${req.file.filename}.png`
+    res.send(garbage)
+})
+
+router.get('/garbage', async (_, res) => {
+    res.send(table)
 })
 
 module.exports = router
