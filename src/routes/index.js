@@ -27,11 +27,10 @@ router.delete('/garbage/:id', async (req, res) => {
 })
 
 router.put('/garbage/:id/image', upload.single('garbage'), async (req, res) => {
-    console.log(req)
     let garbage = table.find(element => element.id = req.params.id)
     fs.rename(req.file.path, `${req.file.path}.png`, function(err) {
         if ( err ) console.log(err)
-    });
+    })
     garbage.url = `https://rocky-dusk-51136.herokuapp.com/uploads/${req.file.filename}.png`
     res.send(garbage)
 })
