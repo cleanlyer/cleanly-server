@@ -1,4 +1,4 @@
-const request = require('./route-initializer')('../../../src/routes/garbage','/'),
+const request = require('./route-initializer')('../../../src/routes/garbage','/garbage'),
     faker =require('faker')
 
 describe('main router should', () => {

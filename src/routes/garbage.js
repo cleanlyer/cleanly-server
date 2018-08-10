@@ -6,14 +6,14 @@ let fs = require('fs')
 
 let table = []
 
-router.post('/garbage', async (req, res) => {
+router.post('/', async (req, res) => {
     if(!req.body.id)
         throw new AppError('Wrong Parameter', 400, {cause:'Wrong Parameter'})
     table.push(req.body)
     res.send(req.body)
 })
 
-router.put('/garbage/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     if(!req.body.id)
         throw new AppError('Wrong Parameter', 400)
     table = table.filter(element => element.id != req.params.id)
@@ -21,12 +21,12 @@ router.put('/garbage/:id', async (req, res) => {
     res.send(req.body)
 })
 
-router.delete('/garbage/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     table = table.filter(element => element.id != req.params.id)
     res.send({}) 
 })
 
-router.put('/garbage/:id/image', upload.single('garbage'), async (req, res) => {
+router.put('/:id/image', upload.single('garbage'), async (req, res) => {
     let garbage = table.find(element => element.id = req.params.id)
     fs.rename(req.file.path, `${req.file.path}.png`, function(err) {
         if ( err ) console.log(err)
@@ -35,7 +35,7 @@ router.put('/garbage/:id/image', upload.single('garbage'), async (req, res) => {
     res.send(garbage)
 })
 
-router.get('/garbage', async (_, res) => {
+router.get('/', async (_, res) => {
     res.send(table)
 })
 
