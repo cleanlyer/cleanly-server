@@ -1,10 +1,12 @@
-const express = require('express'),
-      middlewareBinder = require('./binders/middleware-binder'),
+const middlewareBinder = require('./binders/middleware-binder'),
       routeBinder = require('./binders/route-binder'),
       port = process.env.PORT || 8080,
-      app = express()
- 
+      exceptionHandler = require('express-exception-handler')
+
+exceptionHandler.handle()
+const app = require('express')()
 middlewareBinder(app)
-routeBinder(app)
+routeBinder(app) 
+app.use(exceptionHandler.middleware)
 
 app.listen(port)

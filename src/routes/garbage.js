@@ -8,7 +8,7 @@ let table = []
 
 router.post('/garbage', async (req, res) => {
     if(!req.body.id)
-        throw new AppError('Wrong Parameter', 400)
+        throw new AppError('Wrong Parameter', 400, {cause:'Wrong Parameter'})
     table.push(req.body)
     res.send(req.body)
 })
