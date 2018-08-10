@@ -24,8 +24,16 @@
     "multer": "1.3.1"
   },
   "devDependencies": {
+    "faker": "4.1.0",
     "jest": "23.4.2",
     "nodemon": "1.18.3",
     "supertest": "3.1.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/**/*-test.js"
+    ],
+    "testEnvironment": "node",
+    "automock": false
   }
 }
