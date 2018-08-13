@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 
-
 function middlewareBinder(app){
     app.use(helmet())
     app.use(bodyParser.json())

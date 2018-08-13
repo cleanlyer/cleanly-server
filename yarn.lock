@@ -1071,9 +1071,9 @@ expect@^23.4.0:
     jest-message-util "^23.4.0"
     jest-regex-util "^23.3.0"
 
-express-exception-handler@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/express-exception-handler/-/express-exception-handler-0.1.5.tgz#474c454cb64eddd0c004ede3c3440749c031cc21"
+express-exception-handler@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/express-exception-handler/-/express-exception-handler-1.0.3.tgz#473dfb1d2577689d6add019c2eb1a735f9ddfd97"
 
 express@4.16.3:
   version "4.16.3"

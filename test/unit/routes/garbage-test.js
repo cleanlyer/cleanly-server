@@ -1,7 +1,7 @@
 const request = require('./route-initializer')('../../../src/routes/garbage','/garbage'),
     faker =require('faker')
 
-describe('main router should', () => {
+describe('garbage router should', () => {
     test('if garbage has an Id its accepted', async () => {
         let requestBody = {
             id: faker.random.uuid(),
