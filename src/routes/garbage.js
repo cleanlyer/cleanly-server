@@ -1,8 +1,10 @@
-const router = require('express').Router()
-let AppError = require('express-exception-handler').exception
-let multer  = require('multer')
-let upload = multer({ dest: 'public/uploads/'})
-let fs = require('fs')
+const router = require('express').Router(),
+    AppError = require('express-exception-handler').exception,
+    multer  = require('multer'),
+    upload = multer({ dest: 'public/uploads/'}),
+    fs = require('fs'),
+    toggles = require('../helpers/toggles'),
+    itemsAdapter = require('../adapters/item')
 
 let table = []
 
@@ -10,6 +12,8 @@ router.post('/', async (req, res) => {
     if(!req.body.id)
         throw new AppError('Wrong Parameter', 400, {cause:'Wrong Parameter'})
     table.push(req.body)
+    if(toggles.saveToDb())
+        itemsAdapter.save(req.body)
     res.send(req.body)
 })
 
