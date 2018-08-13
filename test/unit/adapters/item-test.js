@@ -37,5 +37,6 @@ describe('item adapter should', () => {
             tags: [String]
         })
         expect(item.models.item).toEqual(itemSchema)
+        expect(db.model).toBeCalledWith('items', itemSchema)
     })
 })

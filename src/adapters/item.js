@@ -14,6 +14,7 @@ const initialize = () => {
         },
         tags: [String]
     })
+    db.model('items', models.item)
 }
 
 const save = (data) => {}
