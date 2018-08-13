@@ -1,6 +1,7 @@
 const item = require('../../../src/adapters/item')
 describe('item adapter should', () => {
     test('should implement save an item in db', async () => {
-        item.save()
+        let data = {}
+        item.save(data)
     })
 })
