@@ -1,12 +1,12 @@
 const db = require('mongoose'),
-    connectionString = 'mongodb://localhost/my_database'
+    config = require('../config.json')
 
 const models = {
     item: undefined
 }
 
 const initialize = () => {
-    db.connect(connectionString)
+    db.connect(config.mongo.connection)
     let item  = new db.Schema({ 
         location: { 
             type: { $type: String, default: "Point" }, 

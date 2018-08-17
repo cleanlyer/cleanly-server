@@ -61,3 +61,5 @@ typings/
 .next
 
 public/
+
+src/config.json

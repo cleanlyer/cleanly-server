@@ -16,11 +16,11 @@ describe('item adapter should', () => {
     })
 
     test('initialize should initialize connection', async () => {
-        let connection = 'mongodb://localhost/my_database'
+        config = require('../../../src/config.json')
         
         item.initialize()
 
-        expect(db.connect).toBeCalledWith(connection)
+        expect(db.connect).toBeCalledWith(config.mongo.connection)
     })
 
     test('initialize should export item', async () => {
