@@ -67,5 +67,14 @@ describe('item adapter should', () => {
         expect(item.models.item.findByIdAndUpdate).toBeCalledWith(_id, data)
     })
 
+    test('delete should remove item from db', async () => {
+        item.models.item = {
+            findByIdAndDelete: jest.fn()
+        }
+        let _id = faker.random.uuid()
+        await item.remove(_id)
+        expect(item.models.item.findByIdAndDelete).toBeCalledWith(_id)
+    })
+
 
 })

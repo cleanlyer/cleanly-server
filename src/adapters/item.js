@@ -30,9 +30,14 @@ const update = async (id, data) => {
     await models.item.findByIdAndUpdate(id, data)
 }
 
+const remove = async (id) => {
+    await models.item.findByIdAndDelete(id)
+}
+
 module.exports = { 
     save, 
     update,
+    remove,
     initialize,
     models
 }

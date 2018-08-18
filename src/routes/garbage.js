@@ -12,7 +12,7 @@ let _ ={
 
 router.post('/', async (req, res) => {
     if(toggles.saveToDb())
-        itemsAdapter.save(req.body)
+        await itemsAdapter.save(req.body)
     else
         _.table.push(req.body)
     res.send(req.body)
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:_id', async (req, res) => {
     if(toggles.saveToDb())
-        itemsAdapter.update(req.params._id, req.body)
+        await itemsAdapter.update(req.params._id, req.body)
     else {
         _.table = _.table.filter(element => element._id != req.params._id)
         _.table.push(req.body)
@@ -28,8 +28,11 @@ router.put('/:_id', async (req, res) => {
     res.send(req.body)
 })
 
-router.delete('/:id', async (req, res) => {
-    _.table = _.table.filter(element => element.id != req.params.id)
+router.delete('/:_id', async (req, res) => {
+    if(toggles.saveToDb())
+        await itemsAdapter.remove(req.params._id)
+    else
+        _.table = _.table.filter(element => element.id != req.params.id)
     res.send({}) 
 })
 

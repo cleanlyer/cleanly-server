@@ -3,7 +3,8 @@ jest.mock('../../../src/helpers/toggles', () => ({
 }))
 jest.mock('../../../src/adapters/item', () => ({
     save: jest.fn(),
-    update: jest.fn()
+    update: jest.fn(),
+    remove: jest.fn()
 }))
 
 const request = require('./route-initializer')('../../../src/routes/garbage','/garbage'),
@@ -59,11 +60,12 @@ describe('garbage update router should', () => {
                 _id,
                 other: faker.random.uuid()
             }
+        garbage._.table = [{_id}]
         let result = await request.put(`/garbage/${_id}`).send(requestBody)
         expect(result.status).toEqual(200)
         expect(result.text).toEqual(JSON.stringify(requestBody))
         expect(adapter.update).toBeCalledWith(_id, requestBody)
-        expect(garbage._.table).toEqual([])
+        expect(garbage._.table).toEqual([{_id}])
     })
 
     test('if toggle is off dont call update', async () => {
@@ -79,5 +81,42 @@ describe('garbage update router should', () => {
         expect(result.text).toEqual(JSON.stringify(requestBody))
         expect(adapter.update).not.toBeCalled()
         expect(garbage._.table).toEqual([requestBody])
+    })
+})
+
+describe('garbage delete router should', () => {
+    beforeEach(() => {
+        adapter.remove.mockClear()
+        toggles.saveToDb.mockReturnValue(true)
+        garbage._.table = []
+    })
+
+    test('if toggle is on call delete', async () => {
+        let _id = faker.random.uuid(),
+            requestBody = {
+                _id,
+                other: faker.random.uuid()
+            }
+        garbage._.table = [{_id}]
+        let result = await request.delete(`/garbage/${_id}`).send(requestBody)
+        expect(result.status).toEqual(200)
+        expect(result.text).toEqual("{}")
+        expect(adapter.remove).toBeCalledWith(_id)
+        expect(garbage._.table).toEqual([{_id}])
+    })
+
+    test('if toggle is off dont call update', async () => {
+        let _id = faker.random.uuid(),
+            requestBody = {
+                _id,
+                other: faker.random.uuid()
+            }
+        garbage._.table = [{_id}]
+        toggles.saveToDb.mockReturnValue(false)
+        let result = await request.delete(`/garbage/${_id}`).send(requestBody)
+        expect(result.status).toEqual(200)
+        expect(result.text).toEqual("{}")
+        expect(adapter.remove).not.toBeCalled()
+        expect(garbage._.table).toEqual([])
     })
 })
