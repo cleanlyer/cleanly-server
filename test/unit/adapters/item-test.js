@@ -49,22 +49,28 @@ describe('item adapter should', () => {
     test('save should convert item and save to db', async () => {
         let saveMock = {
             save: jest.fn()
-        }
+        },
+        expectedResult = faker.random.uuid()
+        saveMock.save.mockReturnValue(expectedResult)
         item.models.item = jest.fn().mockImplementation(() => saveMock)
         let data = { some: faker.random.uuid() }
-        await item.save(data)
+        let result = await item.save(data)
         expect(item.models.item).toBeCalledWith(data)
         expect(saveMock.save).toBeCalled()
+        expect(result).toEqual(expectedResult)
     })
 
     test('update should convert item and save to db', async () => {
         item.models.item = {
             findByIdAndUpdate: jest.fn()
-        }
+        },
+        expectedResult = faker.random.uuid()
+        item.models.item.findByIdAndUpdate.mockReturnValue(expectedResult)
         let data = { some: faker.random.uuid() }
         let _id = faker.random.uuid()
-        await item.update(_id,data)
+        let result = await item.update(_id,data)
         expect(item.models.item.findByIdAndUpdate).toBeCalledWith(_id, data)
+        expect(result).toEqual(expectedResult)
     })
 
     test('delete should remove item from db', async () => {
@@ -74,6 +80,26 @@ describe('item adapter should', () => {
         let _id = faker.random.uuid()
         await item.remove(_id)
         expect(item.models.item.findByIdAndDelete).toBeCalledWith(_id)
+    })
+
+    test('find should do geojson query', async () => {
+        let coordinates = [faker.random.number(100), faker.random.number(100)],
+            radius = faker.random.number(100),
+            query = { 
+                location: { 
+                    $geoWithin: { 
+                        $centerSphere: [ coordinates, radius ] 
+                    } 
+                } 
+            },
+            expectedResult = faker.random.uuid()
+        item.models.item = {
+            find: jest.fn()
+        }
+        item.models.item.find.mockReturnValue(expectedResult)
+        let result = await item.find({ coordinates, radius })
+        expect(item.models.item.find).toBeCalledWith(query)
+        expect(result).toEqual(result)
     })
 
 

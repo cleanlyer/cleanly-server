@@ -23,21 +23,33 @@ const initialize = () => {
 
 const save = async (data) => {
     let item = new models.item(data)
-    await item.save()
+    return await item.save()
 }
 
 const update = async (id, data) => {
-    await models.item.findByIdAndUpdate(id, data)
+    return await models.item.findByIdAndUpdate(id, data)
 }
 
 const remove = async (id) => {
     await models.item.findByIdAndDelete(id)
 }
 
+const find = async ({coordinates,radius}) => {
+    let query = { 
+        location: { 
+            $geoWithin: { 
+                $centerSphere: [ coordinates, radius ] 
+            } 
+        }
+    } 
+    return await models.item.find(query)
+}
+
 module.exports = { 
     save, 
     update,
     remove,
+    find,
     initialize,
     models
 }

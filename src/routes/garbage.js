@@ -44,7 +44,6 @@ router.get('/', async (req, res) => {
             radius: Number.parseFloat(req.query.radius)
         }
         result = await itemsAdapter.find(query)
-
     }
     res.send(result)
 })
