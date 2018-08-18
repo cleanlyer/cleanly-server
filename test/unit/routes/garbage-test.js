@@ -4,6 +4,7 @@ jest.mock('../../../src/helpers/toggles', () => ({
 jest.mock('../../../src/adapters/item', () => ({
     save: jest.fn(),
     update: jest.fn(),
+    find: jest.fn(),
     remove: jest.fn()
 }))
 
@@ -105,7 +106,7 @@ describe('garbage delete router should', () => {
         expect(garbage._.table).toEqual([{_id}])
     })
 
-    test('if toggle is off dont call update', async () => {
+    test('if toggle is off dont call delete', async () => {
         let _id = faker.random.uuid(),
             requestBody = {
                 _id,
@@ -118,5 +119,42 @@ describe('garbage delete router should', () => {
         expect(result.text).toEqual("{}")
         expect(adapter.remove).not.toBeCalled()
         expect(garbage._.table).toEqual([])
+    })
+})
+
+describe('garbage find router should', () => {
+    beforeEach(() => {
+        adapter.find.mockClear()
+        toggles.saveToDb.mockReturnValue(true)
+        garbage._.table = []
+    })
+
+    test('if toggle is on call find', async () => {
+        let latitude = faker.random.number(100),
+            longitude = faker.random.number(100),
+            radius = faker.random.number(100),
+            _id = faker.random.uuid()
+
+        adapter.find.mockReturnValue([{_id}])
+        let result = await request.get(`/garbage/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`)
+        expect(result.status).toEqual(200)
+        expect(result.text).toEqual(JSON.stringify([{_id}]))
+        expect(adapter.find).toBeCalledWith({coordinates:[latitude,longitude], radius})
+        expect(garbage._.table).toEqual([])
+    })
+
+    test('if toggle is off dont call find', async () => {
+        let latitude = faker.random.number(100),
+            longitude = faker.random.number(100),
+            radius = faker.random.number(100),
+            _id = faker.random.uuid()
+
+        garbage._.table = [{_id}]
+        toggles.saveToDb.mockReturnValue(false)
+        let result = await request.get(`/garbage/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`)
+        expect(result.status).toEqual(200)
+        expect(result.text).toEqual(JSON.stringify([{_id}]))
+        expect(adapter.find).not.toBeCalled()
+        expect(garbage._.table).toEqual([{_id}])
     })
 })

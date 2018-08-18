@@ -36,6 +36,19 @@ router.delete('/:_id', async (req, res) => {
     res.send({}) 
 })
 
+router.get('/', async (req, res) => {
+    let result = _.table
+    if(toggles.saveToDb()){
+        let query = {
+            coordinates:[Number.parseFloat(req.query.latitude), Number.parseFloat(req.query.longitude)], 
+            radius: Number.parseFloat(req.query.radius)
+        }
+        result = await itemsAdapter.find(query)
+
+    }
+    res.send(result)
+})
+
 router.put('/:id/image', upload.single('garbage'), async (req, res) => {
     let garbage = _.table.find(element => element.id = req.params.id)
     fs.rename(req.file.path, `${req.file.path}.png`, function(err) {
@@ -43,10 +56,6 @@ router.put('/:id/image', upload.single('garbage'), async (req, res) => {
     })
     garbage.url = `https://rocky-dusk-51136.herokuapp.com/uploads/${req.file.filename}.png`
     res.send(garbage)
-})
-
-router.get('/', async (_, res) => {
-    res.send(table)
 })
 
 module.exports = router
