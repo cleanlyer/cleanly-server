@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - node
-
+- node
 before_script:
-  - openssl des3 -d -a -in ./encrypted/cf.enc -k "$SSL_PASSWORD" > ./src/config.json
+- openssl des3 -d -a -in ./encrypted/cf.enc -k "$SSL_PASSWORD" > ./src/config.json
 script:
-  - yarn test:cov
+- yarn test:cov
+env:
+  global:
+    secure: arSYNfwUTOL6XybfKfXK6i+Rjza8rREMaFp43PkF7nHLM6Rg1I7yu6svV4CROECZEExn1aDHVLT50M8QaK4dWvstIDpeY+ur/fZkFPYyBq31S+3W1WK+g7/s0knAYfgvJw5K+s+LUFlydWGL/GsXRVMk0yHyzE3iw5RNKPCQXmd5/QtS7rmNBJg9IN+nKHy3EA6NJYzcAN05spUB4yZS2ANL6M9gXwdH6zZCaVKRqj8v3wUDZZOz01iFKE1qVNRC02QF0pAA0jNTPSG7QQe52lvBkAA+Jo0HxDHybW8tE9oxK2z/IPGahNJMHZ9cojgQpzEsgQdXSp6psOvvBjVtfS6J8Fzz5kIV/XBIOzbZNxbckSM9xNVkmnZmmjRt9rLcRuYFU+63vk43/YA+Qsya1etwYaCKIb/+Ym7kCHCyIdZ/p/Bo46wedceyPvarGgHFP/Af82NJ6HwNl6kC6c05zQYyAF6MfMO/rIIf7laHRYOiat4HzLeGAV/nN0kdDvTHYcsKNcxbN2xg4n/YFhrf6Bo7/bhPZDVWCN8+OZ1HKlT4vpNcxjEQy/puBLd9iasgPKDLApcnfxqnh6j9VPXxJuTcJV9CsOIQyLe/CoQn+jxi91sLjv+3uXa8rG0H5qFv7e681UT4/smxhnLEuL6x1dQW1hFa0pzDZBewDaLgn98=
