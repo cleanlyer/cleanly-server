@@ -52,19 +52,19 @@ describe('item adapter should', () => {
         }
         item.models.item = jest.fn().mockImplementation(() => saveMock)
         let data = { some: faker.random.uuid() }
-        item.save(data)
+        await item.save(data)
         expect(item.models.item).toBeCalledWith(data)
         expect(saveMock.save).toBeCalled()
     })
 
     test('update should convert item and save to db', async () => {
-        let saveMock = {
-            save: jest.fn()
+        item.models.item = {
+            findByIdAndUpdate: jest.fn()
         }
-        item.models.item = jest.fn().mockImplementation(() => saveMock)
         let data = { some: faker.random.uuid() }
         let _id = faker.random.uuid()
-        item.update(_id,data)
+        await item.update(_id,data)
+        expect(item.models.item.findByIdAndUpdate).toBeCalledWith(_id, data)
     })
 
 

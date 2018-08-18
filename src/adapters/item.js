@@ -21,12 +21,13 @@ const initialize = () => {
     models.item = db.model('items', item)
 }
 
-const save = (data) => {
+const save = async (data) => {
     let item = new models.item(data)
-    item.save()
+    await item.save()
 }
 
-const update = (id, data) => {
+const update = async (id, data) => {
+    await models.item.findByIdAndUpdate(id, data)
 }
 
 module.exports = { 
