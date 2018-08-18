@@ -1,5 +1,5 @@
 jest.mock('../../../src/helpers/toggles', () => ({
-    saveToDb: jest.fn()
+    isTestMode: jest.fn()
 }))
 jest.mock('../../../src/adapters/item', () => ({
     save: jest.fn(),
@@ -17,7 +17,7 @@ const request = require('./route-initializer')('../../../src/routes/garbage','/g
 describe('garbage create router should', () => {
     beforeEach(() => {
         adapter.save.mockClear()
-        toggles.saveToDb.mockReturnValue(true)
+        toggles.isTestMode.mockReturnValue(true)
         garbage._.table = []
     })
 
@@ -38,7 +38,7 @@ describe('garbage create router should', () => {
             _id: faker.random.uuid(),
             other: faker.random.uuid()
         }
-        toggles.saveToDb.mockReturnValue(false)
+        toggles.isTestMode.mockReturnValue(false)
         let result = await request.post('/garbage').send(requestBody)
         expect(result.status).toEqual(200)
         expect(result.text).toEqual(JSON.stringify(requestBody))
@@ -51,7 +51,7 @@ describe('garbage create router should', () => {
 describe('garbage update router should', () => {
     beforeEach(() => {
         adapter.update.mockClear()
-        toggles.saveToDb.mockReturnValue(true)
+        toggles.isTestMode.mockReturnValue(true)
         garbage._.table = []
     })
 
@@ -76,7 +76,7 @@ describe('garbage update router should', () => {
                 other: faker.random.uuid()
             }
         garbage._.table = [{_id}]
-        toggles.saveToDb.mockReturnValue(false)
+        toggles.isTestMode.mockReturnValue(false)
         let result = await request.put(`/garbage/${_id}`).send(requestBody)
         expect(result.status).toEqual(200)
         expect(result.text).toEqual(JSON.stringify(requestBody))
@@ -88,7 +88,7 @@ describe('garbage update router should', () => {
 describe('garbage delete router should', () => {
     beforeEach(() => {
         adapter.remove.mockClear()
-        toggles.saveToDb.mockReturnValue(true)
+        toggles.isTestMode.mockReturnValue(true)
         garbage._.table = []
     })
 
@@ -113,7 +113,7 @@ describe('garbage delete router should', () => {
                 other: faker.random.uuid()
             }
         garbage._.table = [{_id}]
-        toggles.saveToDb.mockReturnValue(false)
+        toggles.isTestMode.mockReturnValue(false)
         let result = await request.delete(`/garbage/${_id}`).send(requestBody)
         expect(result.status).toEqual(200)
         expect(result.text).toEqual("{}")
@@ -125,7 +125,7 @@ describe('garbage delete router should', () => {
 describe('garbage find router should', () => {
     beforeEach(() => {
         adapter.find.mockClear()
-        toggles.saveToDb.mockReturnValue(true)
+        toggles.isTestMode.mockReturnValue(true)
         garbage._.table = []
     })
 
@@ -150,7 +150,7 @@ describe('garbage find router should', () => {
             _id = faker.random.uuid()
 
         garbage._.table = [{_id}]
-        toggles.saveToDb.mockReturnValue(false)
+        toggles.isTestMode.mockReturnValue(false)
         let result = await request.get(`/garbage/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`)
         expect(result.status).toEqual(200)
         expect(result.text).toEqual(JSON.stringify([{_id}]))

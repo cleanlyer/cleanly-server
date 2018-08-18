@@ -11,7 +11,7 @@ let _ ={
 }
 
 router.post('/', async (req, res) => {
-    if(toggles.saveToDb())
+    if(toggles.isTestMode(req))
         await itemsAdapter.save(req.body)
     else
         _.table.push(req.body)
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:_id', async (req, res) => {
-    if(toggles.saveToDb())
+    if(toggles.isTestMode(req))
         await itemsAdapter.update(req.params._id, req.body)
     else {
         _.table = _.table.filter(element => element._id != req.params._id)
@@ -29,7 +29,7 @@ router.put('/:_id', async (req, res) => {
 })
 
 router.delete('/:_id', async (req, res) => {
-    if(toggles.saveToDb())
+    if(toggles.isTestMode(req))
         await itemsAdapter.remove(req.params._id)
     else
         _.table = _.table.filter(element => element.id != req.params.id)
@@ -38,7 +38,7 @@ router.delete('/:_id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     let result = _.table
-    if(toggles.saveToDb()){
+    if(toggles.isTestMode(req)){
         let query = {
             coordinates:[Number.parseFloat(req.query.latitude), Number.parseFloat(req.query.longitude)], 
             radius: Number.parseFloat(req.query.radius)
