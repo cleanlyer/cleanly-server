@@ -26,8 +26,12 @@ const save = (data) => {
     item.save()
 }
 
+const update = (id, data) => {
+}
+
 module.exports = { 
     save, 
+    update,
     initialize,
     models
 }

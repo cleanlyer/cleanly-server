@@ -57,5 +57,15 @@ describe('item adapter should', () => {
         expect(saveMock.save).toBeCalled()
     })
 
+    test('update should convert item and save to db', async () => {
+        let saveMock = {
+            save: jest.fn()
+        }
+        item.models.item = jest.fn().mockImplementation(() => saveMock)
+        let data = { some: faker.random.uuid() }
+        let _id = faker.random.uuid()
+        item.update(_id,data)
+    })
+
 
 })
