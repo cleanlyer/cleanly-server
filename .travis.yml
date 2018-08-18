@@ -2,6 +2,6 @@ language: node_js
 node_js:
   - node
 before_script:
-  - openssl des3 -d -out ./src/config.json -in ./encrypted/cf.enc -k "$SSL_PASSWORD"
+  - openssl des3 -d -a -in ./encrypted/cf.enc -k $SSL_PASSWORD > ./src/config.json 
 script:
   - yarn test:cov
