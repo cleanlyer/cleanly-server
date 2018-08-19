@@ -38,16 +38,9 @@ resource "aws_instance" "cleanlyer_api" {
         Name = "cleanlyer-api"
     }
     user_data = <<-EOF
-            #!/bin/bash
-            sudo yum install nodejs npm --enablerepo=epel
-            npm install yarn -g
-            mkdir app
-            cd app
-            wget https://github.com/cleanlyer/cleanly-server/archive/master.zip
-            unzip master.zip -d ./
-            rm -f master.zip
-            yarn install
-            yarn start
-            EOF
+              #!/bin/bash
+              echo "Hello, World" > index.html
+              nohup busybox httpd -f -p "${var.server_port}" &
+              EOF
 
 }
