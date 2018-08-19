@@ -33,7 +33,7 @@ resource "aws_security_group" "instance_security" {
 resource "aws_instance" "cleanlyer_api" {
     ami = "ami-3548444c"
     instance_type = "t2.micro"
-    security_groups = ["${aws_security_group.instance_security.id}"]
+    vpc_security_group_ids = ["${aws_security_group.instance_security.id}"]
     tags {
         Name = "cleanlyer-api"
     }
