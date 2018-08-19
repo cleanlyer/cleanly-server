@@ -1,14 +1,6 @@
 provider "aws" {
     region = "eu-west-1"
 }
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  default = 8080
-}
-
-output "public_ip" {
-  value = "${aws_instance.cleanlyer_api.public_ip}"
-}
 
 data "terraform_remote_state" "network" {
   backend = "s3"
