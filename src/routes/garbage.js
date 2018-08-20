@@ -1,5 +1,4 @@
 const router = require('express').Router(),
-    AppError = require('express-exception-handler').exception,
     multer  = require('multer'),
     upload = multer({ dest: 'public/uploads/'}),
     fs = require('fs'),
