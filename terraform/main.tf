@@ -15,8 +15,8 @@ resource "aws_security_group" "instance_security" {
     name = "cleanlyer-api-instance"
 
     ingress {
-        from_port = "${var.server_port}"
-        to_port = "${var.server_port}"
+        from_port = 0
+        to_port = 0
         protocol = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
