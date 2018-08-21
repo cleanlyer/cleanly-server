@@ -7,7 +7,7 @@ const keyGenerator = (_, __, callback) => {
 }   
 
 const s3 = () => {
-    var s3 = new aws.S3({ /* ... */ })
+    var s3 = new aws.S3({apiVersion: '2006-03-01'})
     return multerS3({
         s3,
         bucket: 'cleanlyer-images',

@@ -28,6 +28,7 @@ describe('s3 multer configuration should', () => {
             cacheControl: 'max-age=31536000',
             key: multer._.keyGenerator
         })
+        expect(aws.S3).toBeCalledWith({apiVersion: '2006-03-01'})
     })
 
     test('key generator calls cb with guid generated image', async () => {
