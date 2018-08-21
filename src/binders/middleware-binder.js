@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 
-function middlewareBinder(app){
+function middlewareBinder(app, disableLogs){
     app.use(helmet())
     app.use(bodyParser.json())
     app.use(cors({
@@ -11,7 +11,8 @@ function middlewareBinder(app){
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"]
     }))
-    app.use(morgan('combined'))
+    if(!disableLogs)
+        app.use(morgan('combined'))
 }
 
 module.exports = middlewareBinder
