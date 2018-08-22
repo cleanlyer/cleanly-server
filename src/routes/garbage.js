@@ -48,7 +48,6 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/:_id/image', upload.single('garbage'),async (req, res) => {
-    console.log(req.file.location)
     let update = {$push: { images: req.file.location } }
     let result = await itemsAdapter.update(req.params._id, update)
     res.send(result)
