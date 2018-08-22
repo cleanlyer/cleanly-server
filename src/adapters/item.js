@@ -27,7 +27,7 @@ const save = async (data) => {
 }
 
 const update = async (id, data) => {
-    return await models.item.findByIdAndUpdate(id, data)
+    return await models.item.findByIdAndUpdate(id, data, {safe: true, upsert: true, new : true})
 }
 
 const remove = async (id) => {

@@ -7,11 +7,20 @@ jest.mock('../../../src/adapters/item', () => ({
     find: jest.fn(),
     remove: jest.fn()
 }))
+jest.mock('../../../src/helpers/multer-config', () => ({s3:jest.fn()}))
+jest.mock('multer', () => jest.fn().mockImplementation(() => ({single:jest.fn(() => jest.fn())})))
 
-const request = require('./route-initializer')('../../../src/routes/garbage','/garbage'),
+const 
     faker =require('faker'),
     toggles = require('../../../src/helpers/toggles'),
     adapter = require('../../../src/adapters/item'),
+    multerConfig = require('../../../src/helpers/multer-config'),
+    multer = require('multer')
+
+const multerConfigResult = {some: faker.random.uuid()}
+multerConfig.s3.mockReturnValue(multerConfigResult)
+
+const request = require('./route-initializer')('../../../src/routes/garbage','/garbage'),
     garbage = require('../../../src/routes/garbage')
 
 describe('garbage create router should', () => {

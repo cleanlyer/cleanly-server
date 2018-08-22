@@ -1,10 +1,10 @@
 const router = require('express').Router(),
     multer  = require('multer'),
-    upload = multer({ dest: 'public/uploads/'}),
-    fs = require('fs'),
+    multerConfig = require('../helpers/multer-config'),
+    upload = multer({storage: multerConfig.s3()}),
+    fs = require('fs'), 
     toggles = require('../helpers/toggles'),
     itemsAdapter = require('../adapters/item')
-
 let _ ={
     table: []
 }
@@ -47,13 +47,11 @@ router.get('/', async (req, res) => {
     res.send(result)
 })
 
-router.put('/:id/image', upload.single('garbage'), async (req, res) => {
-    let garbage = _.table.find(element => element.id = req.params.id)
-    fs.rename(req.file.path, `${req.file.path}.png`, function(err) {
-        if ( err ) console.log(err)
-    })
-    garbage.url = `https://rocky-dusk-51136.herokuapp.com/uploads/${req.file.filename}.png`
-    res.send(garbage)
+router.put('/:_id/image', upload.single('garbage'),async (req, res) => {
+    console.log(req.file.location)
+    let update = {$push: { images: req.file.location } }
+    let result = await itemsAdapter.update(req.params._id, update)
+    res.send(result)
 })
 
 module.exports = router

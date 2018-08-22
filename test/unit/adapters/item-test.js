@@ -65,11 +65,12 @@ describe('item adapter should', () => {
             findByIdAndUpdate: jest.fn()
         },
         expectedResult = faker.random.uuid()
+        settings = {"new": true, "safe": true, "upsert": true}
         item.models.item.findByIdAndUpdate.mockReturnValue(expectedResult)
         let data = { some: faker.random.uuid() }
         let _id = faker.random.uuid()
         let result = await item.update(_id,data)
-        expect(item.models.item.findByIdAndUpdate).toBeCalledWith(_id, data)
+        expect(item.models.item.findByIdAndUpdate).toBeCalledWith(_id, data,settings)
         expect(result).toEqual(expectedResult)
     })
 
